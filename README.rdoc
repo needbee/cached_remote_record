@@ -1,0 +1,9 @@
+= CachedRemoteRecord
+
+Base model classes for accessing records in a remote system (such as a
+web service) and caching them locally.
+
+Author:		Josh Justice <josh@need-bee.com>
+Version:	0.0.1
+
+This project uses MIT-LICENSE.
