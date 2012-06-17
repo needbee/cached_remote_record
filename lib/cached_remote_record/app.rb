@@ -28,6 +28,7 @@
 # Author::    Josh Justice (mailto:josh@need-bee.com)
 # Copyright:: Copyright (c) 2012 NeedBee, LLC
 class App < CachedWebServiceRecord
+  cattr_accessor :itunes_api_server, :itunes_api_search_path, :itunes_api_lookup_path
   attr_accessible :icon_url, :company_name, :company_url, :description, :file_size_bytes, :category, :itunes_rating, :itunes_link, :name, :price, :release_date, :release_notes, :version, :devices
   has_many :app_devices
   has_many :devices, :through => :app_devices
@@ -39,7 +40,12 @@ class App < CachedWebServiceRecord
   validates :itunes_link,   :presence => true
   validates :itunes_rating, :presence => true
                     
-  @@data_type = 'json'
+  @@data_type               = 'json'
+  
+  # set in environment.rb
+  @@itunes_api_server       = nil
+  @@itunes_api_search_path  = nil
+  @@itunes_api_lookup_path  = nil
 
   def update_from_api(json_obj)
     if !json_obj.nil?
@@ -93,15 +99,15 @@ class App < CachedWebServiceRecord
   end
   
   def self.api_server
-    Dummy::Application.config.itunes_api_server
+    @@itunes_api_server
   end
   
   def self.api_search_path(escaped_query)
-    "#{Dummy::Application.config.itunes_api_search_path}#{escaped_query}"
+    "#{@@itunes_api_search_path}#{escaped_query}"
   end
 
   def self.api_lookup_path(escaped_api_key)
-    "#{Dummy::Application.config.itunes_api_lookup_path}#{escaped_api_key}"
+    "#{@@itunes_api_lookup_path}#{escaped_api_key}"
   end
 
   def self.extract_search_results(json_results_obj)
