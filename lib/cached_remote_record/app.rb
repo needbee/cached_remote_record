@@ -49,7 +49,7 @@ class App < CachedWebServiceRecord
 
   def update_from_api(json_obj)
     if !json_obj.nil?
-      update_attributes!( App.get_field_hash(json_obj) )
+      update_attributes( App.get_field_hash(json_obj) )
     end
   end
   
