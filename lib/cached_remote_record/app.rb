@@ -51,7 +51,7 @@ class App < CachedWebServiceRecord
     if !json_obj.nil?
       update_attributes( App.get_field_hash(json_obj) )
     end
-  end
+  end 
   
   private
 
